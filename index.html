@@ -1,10 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Chapter Parser App</title>
+    <meta charset="UTF-8">
+    <title>Chapter Parser App</title>
+    <!-- 最新編譯和最佳化的 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <!-- 選擇性佈景主題 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <!-- 最新編譯和最佳化的 JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-	中文測試
+    <script type="text/javascript" src="node_modules/bootstrap-filestyle/src/bootstrap-filestyle.min.js"></script>
+    <script src="http://gregpike.net/demos/bootstrap-file-input/bootstrap.file-input.js"></script>
+
+    <!-- Display filename inside the button instead of its label -->
+    <input type="file" data-filename-placement="inside" title="選取檔案">
+    <button type="button" class="btn btn-primary">讀取檔案內容</button>
+
+
+
+
+    <!-- 修改檔案按鈕外型 -->
+    <script>
+    $('input[type=file]').bootstrapFileInput();
+    $('.file-inputs').bootstrapFileInput();
+    </script>
 </body>
+
 </html>
