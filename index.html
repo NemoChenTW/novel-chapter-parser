@@ -16,11 +16,14 @@
 <body>
     <script src="http://gregpike.net/demos/bootstrap-file-input/bootstrap.file-input.js"></script>
 
+
     <!-- Display filename inside the button instead of its label -->
-    <input type="file" data-filename-placement="inside" title="選取檔案">
-    <button type="button" class="btn btn-primary">讀取檔案內容</button>
+    <input type="file" id="datafile" data-filename-placement="inside" title="選取檔案">
+    <button type="button" class="btn btn-primary" onclick="readFile()">讀取檔案內容</button>
 
-
+    <div>
+        <pre id="file_content" hidden="true"></pre>
+    </div>
 
 
     <!-- 修改檔案按鈕外型 -->
@@ -28,6 +31,8 @@
     $('input[type=file]').bootstrapFileInput();
     $('.file-inputs').bootstrapFileInput();
     </script>
+
+    <script src="js/readfile.js"></script>
 </body>
 
 </html>
