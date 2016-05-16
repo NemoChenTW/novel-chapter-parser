@@ -1,9 +1,15 @@
 {
-  "name": "novel-chapter-parser",
-  "version": "0.1.0",
-  "description": "A novel chapter parser.",
-  "main": "main.js",
-  "devDependencies": {
-    "electron-prebuilt": "^1.1.0"
-  }
+    "name": "novel-chapter-parser",
+    "version": "0.1.0",
+    "description": "A novel chapter parser.",
+    "main": "main.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NemoChenTW/novel-chapter-parser.git"
+    },
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "bootstrap": "^3.3.6",
+        "electron-prebuilt": "^1.1.0"
+    }
 }
