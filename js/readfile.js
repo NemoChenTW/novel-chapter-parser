@@ -17,6 +17,11 @@
 
               contentArea.innerHTML = parseFile(FileContens);
               contentArea.hidden = false;
+
+
+              var parseArea = document.getElementById('parse_content');
+              parseArea.textContent = FileContens;
+              parseArea.hidden = false;
           }
       };
 
