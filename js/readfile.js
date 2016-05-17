@@ -38,7 +38,7 @@
       var start = '<font color="red">';
       var end = '</font>';
 
-      if (i % 2 == 0) {
+      if (isChapter(line)) {
         result = start + line + end;
       }
       else {
@@ -49,4 +49,18 @@
     }
 
     return outputContent;
+  }
+
+
+  function isChapter(str) {
+    var patt = /(第?([0-9]|[零一二三四五六七八九十百千零壹貳參肆伍陸柒捌玖拾佰仟初兩])+章)|楔子/i;
+
+    if(str.search(patt) != -1)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
