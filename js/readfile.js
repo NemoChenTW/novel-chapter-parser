@@ -12,7 +12,32 @@
       reader.onloadend = function(evt) {
           if (evt.target.readyState == FileReader.DONE) { // DONE == 2
               var contentArea = document.getElementById('file_content');
-              contentArea.textContent = evt.target.result;
+              var FileContens = evt.target.result;
+
+              // 將檔案內容以行為單位儲存
+              var lines = FileContens.split('\n');
+
+              var outputContent;
+              // 處理每一行的內容
+              for(var i = 0; i < lines.length; i++)
+              {
+                var line = lines[i];
+
+                var result;
+                var start = '<font color="red">';
+                var end = '</font>';
+
+                if (i % 2 == 0) {
+                  result = start + line + end;
+                }
+                else {
+                  result = line;
+                }
+
+                outputContent = (outputContent || "") + result;
+              }
+
+              contentArea.innerHTML = outputContent;
               contentArea.hidden = false;
           }
       };
