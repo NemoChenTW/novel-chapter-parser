@@ -15,12 +15,13 @@
               var FileContens = evt.target.result;
 
 
-              contentArea.innerHTML = parseFile(FileContens);
+              var resContent = parseFile(FileContens);
+              contentArea.innerHTML = resContent.originalContent;
               contentArea.hidden = false;
 
 
               var parseArea = document.getElementById('parse_content');
-              parseArea.textContent = FileContens;
+              parseArea.textContent = resContent.parseContent;
               parseArea.hidden = false;
           }
       };
@@ -31,29 +32,37 @@
 
   function parseFile(FileContens) {
 
+    var resultContent = {
+      originalContent : "",
+      parseContent : ""
+    };
+
     // 將檔案內容以行為單位儲存
     var lines = FileContens.split('\n');
-    var outputContent;
+
     // 處理每一行的內容
     for(var i = 0; i < lines.length; i++)
     {
       var line = lines[i];
 
-      var result;
+      var originalResult, parseResult;
       var start = '<font color="red">';
       var end = '</font>';
 
       if (isChapter(line)) {
-        result = start + line + end;
+        originalResult = start + line + end;
+        parseResult = "<chapter> " + line;
       }
       else {
-        result = line;
+        originalResult = line;
+        parseResult = line;
       }
 
-      outputContent = (outputContent || "") + result;
+      resultContent.originalContent = (resultContent.originalContent || "") + originalResult;
+      resultContent.parseContent = (resultContent.parseContent || "") + parseResult + '\n';
     }
 
-    return outputContent;
+    return resultContent;
   }
 
 
