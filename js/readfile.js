@@ -23,6 +23,10 @@
               var parseArea = document.getElementById('parse_content');
               parseArea.textContent = resContent.parseContent;
               parseArea.hidden = false;
+
+              // 顯示 存檔按鈕
+              $("#button_save").show();
+
           }
       };
 
