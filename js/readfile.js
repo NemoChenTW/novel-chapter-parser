@@ -6,11 +6,11 @@ function extend(child, supertype)
 
 // 定義 TextContent
 function TextContent(content){
-  this.content = content || "";
+  this.content = content || '';
 }
 TextContent.prototype = {
   isEmpty : function () {
-    return (this.content == "" || this.content == null);
+    return (this.content == '' || this.content == null);
   },
   AddContent : function (content) {
     this.content += content;
@@ -29,26 +29,26 @@ IParseNovel.prototype = {
 
 // 定義 ChapterObj
 function ChapterObj(title, content){
-  this.title = title || "";
-  this.originContent = new TextContent(content || "");
-  this.parsedTitle = "";
-  this.parsedContent = "";
+  this.title = title || '';
+  this.originContent = new TextContent(content || '');
+  this.parsedTitle = '';
+  this.parsedContent = '';
 }
 ChapterObj.prototype = {
   isEmpty : function () {
     return (this.isTitleEmpty() && this.isContentEmpty());
   },
   isTitleEmpty : function () {
-    return (this.title == "" || this.title == null);
+    return (this.title == '' || this.title == null);
   },
   isContentEmpty : function () {
     return (this.originContent.isEmpty());
   },
   print : function () {
-    return this.title + "\n" + this.originContent.content;
+    return this.title + '\n' + this.originContent.content;
   },
   printParseResult : function () {
-    return this.parsedTitle + "\n" + this.parsedContent.content;
+    return this.parsedTitle + '\n' + this.parsedContent.content;
   },
   AddContent : function (content) {
     this.originContent.AddContent(content);
@@ -88,7 +88,7 @@ extend(ChapterObj, IParseNovel);
               parseArea.hidden = false;
 
               // 顯示 存檔按鈕
-              $("#button_save").show();
+              $('#button_save').show();
 
           }
       };
@@ -98,14 +98,14 @@ extend(ChapterObj, IParseNovel);
 
   function saveFile()
   {
-  	var textToWrite = document.getElementById("parse_content").textContent;
+  	var textToWrite = document.getElementById('parse_content').textContent;
   	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-    var fileNameToSaveAs = "NewFile"
-  	// var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+    var fileNameToSaveAs = 'NewFile'
+  	// var fileNameToSaveAs = document.getElementById('inputFileNameToSaveAs').value;
 
-  	var downloadLink = document.createElement("a");
+  	var downloadLink = document.createElement('a');
   	downloadLink.download = fileNameToSaveAs;
-  	downloadLink.innerHTML = "Download File";
+  	downloadLink.innerHTML = 'Download File';
   	if (window.webkitURL != null)
   	{
   		// Chrome allows the link to be clicked
@@ -118,7 +118,7 @@ extend(ChapterObj, IParseNovel);
   		// before it can be clicked.
   		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
   		downloadLink.onclick = destroyClickedElement;
-  		downloadLink.style.display = "none";
+  		downloadLink.style.display = 'none';
   		document.body.appendChild(downloadLink);
   	}
 
@@ -134,13 +134,13 @@ extend(ChapterObj, IParseNovel);
 
     var ContentArray = [];
     var resultContent = {
-      originalContent : "",
-      parseContent : ""
+      originalContent : '',
+      parseContent : ''
     };
     var contentItem = new ChapterObj();
     IParseNovel.prototype.parseAllTitles = function () {
       if(!this.isTitleEmpty()){
-        this.parsedTitle = "<chapter> " + this.title;
+        this.parsedTitle = '<chapter> ' + this.title;
       }
     }
 
@@ -178,8 +178,8 @@ extend(ChapterObj, IParseNovel);
     // 處理所有內容
     for (var i = 0; i < ContentArray.length; i++) {
       ContentArray[i].runParse();
-      resultContent.originalContent = (resultContent.originalContent || "") + ContentArray[i].print();
-      resultContent.parseContent = (resultContent.parseContent || "") + ContentArray[i].printParseResult();
+      resultContent.originalContent = (resultContent.originalContent || '') + ContentArray[i].print();
+      resultContent.parseContent = (resultContent.parseContent || '') + ContentArray[i].printParseResult();
     }
 
     return resultContent;
