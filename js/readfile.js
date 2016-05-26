@@ -138,6 +138,11 @@ extend(ChapterObj, IParseNovel);
       parseContent : ""
     };
     var contentItem = new ChapterObj();
+    IParseNovel.prototype.parseAllTitles = function () {
+      if(!this.isTitleEmpty()){
+        this.parsedTitle = "<chapter> " + this.title;
+      }
+    }
 
     // 將檔案內容以行為單位儲存
     var lines = FileContens.split('\n');
