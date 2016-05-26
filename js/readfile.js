@@ -3,6 +3,9 @@ function TextContent(content){
   this.content = content || "";
 }
 TextContent.prototype = {
+  isEmpty : function () {
+    return (this.content == "" || this.content == null);
+  },
   AddContent : function (content) {
     this.content += content;
   }
@@ -16,6 +19,15 @@ function ChapterObj(title, content){
   this.parse = function () {};
 }
 ChapterObj.prototype = {
+  isEmpty : function () {
+    return (this.isTitleEmpty() && this.isContentEmpty());
+  },
+  isTitleEmpty : function () {
+    return (this.title == "" || this.title == null);
+  },
+  isContentEmpty : function () {
+    return (this.originContent.isEmpty());
+  },
   print : function () {
     return this.title + "\n" + this.originContent.content + "\n";
   },
