@@ -45,10 +45,10 @@ ChapterObj.prototype = {
     return (this.originContent.isEmpty());
   },
   print : function () {
-    return this.title + '\n' + this.originContent.content;
+    return this.title + this.originContent.content;
   },
   printParseResult : function () {
-    return this.parsedTitle + '\n' + this.parsedContent.content;
+    return this.parsedTitle + this.parsedContent.content;
   },
   AddContent : function (content) {
     this.originContent.AddContent(content);
@@ -163,7 +163,7 @@ extend(ChapterObj, IParseNovel);
           ContentArray.push(contentItem);
         }
         // 建立新章節物件
-        contentItem = new ChapterObj(line);
+        contentItem = new ChapterObj(line + '\n');
       }
       else {
         contentItem.AddContent(line + '\n');
