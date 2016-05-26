@@ -79,16 +79,18 @@ extend(ChapterObj, IParseNovel);
 
 
               var resContent = parseFile(FileContens);
-              contentArea.innerHTML = resContent.originalContent;
+              // contentArea.innerHTML = resContent.originalContent;
+              contentArea.innerHTML = resContent.CapturedTitles;
               contentArea.hidden = false;
 
 
               var parseArea = document.getElementById('parse_content');
-              parseArea.textContent = resContent.parseContent;
-              parseArea.hidden = false;
+              saveFile(resContent.parseContent);
+              // parseArea.textContent = resContent.parseContent;
+              // parseArea.hidden = false;
 
               // 顯示 存檔按鈕
-              $('#button_save').show();
+              // $('#button_save').show();
 
           }
       };
