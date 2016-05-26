@@ -45,10 +45,10 @@ ChapterObj.prototype = {
     return (this.originContent.isEmpty());
   },
   print : function () {
-    return this.title + "\n" + this.originContent.content + "\n";
+    return this.title + "\n" + this.originContent.content;
   },
   printParseResult : function () {
-    return this.parsedTitle + "\n" + this.parsedContent.content + "\n";
+    return this.parsedTitle + "\n" + this.parsedContent.content;
   },
   AddContent : function (content) {
     this.originContent.AddContent(content);
@@ -157,24 +157,19 @@ extend(ChapterObj, IParseNovel);
       var end = '</font>';
 
       if (isChapter(line)) {
+        //若原本已經有內容, 先儲存起來
         if(!contentItem.isEmpty())
         {
           ContentArray.push(contentItem);
-          contentItem = new ChapterObj(line);
         }
-        //
-        // originalResult = start + line + end;
-        // parseResult = "<chapter> " + line;
+        // 建立新章節物件
+        contentItem = new ChapterObj(line);
       }
       else {
-        contentItem.AddContent(line);
-        // originalResult = line;
-        // parseResult = line;
+        contentItem.AddContent(line + '\n');
       }
-      //
-      // resultContent.originalContent = (resultContent.originalContent || "") + originalResult;
-      // resultContent.parseContent = (resultContent.parseContent || "") + parseResult + '\n';
     }
+    // 儲存最後一個處理的物件
     if(!contentItem.isEmpty())
     {
       ContentArray.push(contentItem);
@@ -184,7 +179,7 @@ extend(ChapterObj, IParseNovel);
     for (var i = 0; i < ContentArray.length; i++) {
       ContentArray[i].runParse();
       resultContent.originalContent = (resultContent.originalContent || "") + ContentArray[i].print();
-      resultContent.parseContent = (resultContent.parseContent || "") + ContentArray[i].printParseResult() + '\n';
+      resultContent.parseContent = (resultContent.parseContent || "") + ContentArray[i].printParseResult();
     }
 
     return resultContent;
