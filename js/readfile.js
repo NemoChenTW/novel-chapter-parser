@@ -1,3 +1,66 @@
+// 設定繼承
+function extend(child, supertype)
+{
+   child.prototype.__proto__ = supertype.prototype;
+}
+
+// 定義 TextContent
+function TextContent(content){
+  this.content = content || '';
+}
+TextContent.prototype = {
+  isEmpty : function () {
+    return (this.content == '' || this.content == null);
+  },
+  AddContent : function (content) {
+    this.content += content;
+  }
+}
+
+function IParseNovel() {}
+IParseNovel.prototype = {
+  parseAllTitles : function () {
+    this.parsedTitle = this.title;
+  },
+  parseAllContents : function () {
+    this.parsedContent = this.originContent;
+  }
+}
+
+// 定義 ChapterObj
+function ChapterObj(title, content){
+  this.title = title || '';
+  this.originContent = new TextContent(content || '');
+  this.parsedTitle = '';
+  this.parsedContent = '';
+}
+ChapterObj.prototype = {
+  isEmpty : function () {
+    return (this.isTitleEmpty() && this.isContentEmpty());
+  },
+  isTitleEmpty : function () {
+    return (this.title == '' || this.title == null);
+  },
+  isContentEmpty : function () {
+    return (this.originContent.isEmpty());
+  },
+  print : function () {
+    return this.title + this.originContent.content;
+  },
+  printParseResult : function () {
+    return this.parsedTitle + this.parsedContent.content;
+  },
+  AddContent : function (content) {
+    this.originContent.AddContent(content);
+  },
+  runParse : function () {
+    this.parseAllTitles();
+    this.parseAllContents();
+  }
+}
+// 設定 ChapterObj 繼承 IParseNovel
+extend(ChapterObj, IParseNovel);
+
   function readFile() {
       var files = document.getElementById('datafile').files;
       if (!files.length) {
@@ -25,7 +88,7 @@
               parseArea.hidden = false;
 
               // 顯示 存檔按鈕
-              $("#button_save").show();
+              $('#button_save').show();
 
           }
       };
@@ -35,14 +98,14 @@
 
   function saveFile()
   {
-  	var textToWrite = document.getElementById("parse_content").textContent;
+  	var textToWrite = document.getElementById('parse_content').textContent;
   	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-    var fileNameToSaveAs = "NewFile"
-  	// var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+    var fileNameToSaveAs = 'NewFile'
+  	// var fileNameToSaveAs = document.getElementById('inputFileNameToSaveAs').value;
 
-  	var downloadLink = document.createElement("a");
+  	var downloadLink = document.createElement('a');
   	downloadLink.download = fileNameToSaveAs;
-  	downloadLink.innerHTML = "Download File";
+  	downloadLink.innerHTML = 'Download File';
   	if (window.webkitURL != null)
   	{
   		// Chrome allows the link to be clicked
@@ -55,7 +118,7 @@
   		// before it can be clicked.
   		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
   		downloadLink.onclick = destroyClickedElement;
-  		downloadLink.style.display = "none";
+  		downloadLink.style.display = 'none';
   		document.body.appendChild(downloadLink);
   	}
 
@@ -69,10 +132,17 @@
 
   function parseFile(FileContens) {
 
+    var ContentArray = [];
     var resultContent = {
-      originalContent : "",
-      parseContent : ""
+      originalContent : '',
+      parseContent : ''
     };
+    var contentItem = new ChapterObj();
+    IParseNovel.prototype.parseAllTitles = function () {
+      if(!this.isTitleEmpty()){
+        this.parsedTitle = '<chapter> ' + this.title;
+      }
+    }
 
     // 將檔案內容以行為單位儲存
     var lines = FileContens.split('\n');
@@ -87,16 +157,29 @@
       var end = '</font>';
 
       if (isChapter(line)) {
-        originalResult = start + line + end;
-        parseResult = "<chapter> " + line;
+        //若原本已經有內容, 先儲存起來
+        if(!contentItem.isEmpty())
+        {
+          ContentArray.push(contentItem);
+        }
+        // 建立新章節物件
+        contentItem = new ChapterObj(line + '\n');
       }
       else {
-        originalResult = line;
-        parseResult = line;
+        contentItem.AddContent(line + '\n');
       }
+    }
+    // 儲存最後一個處理的物件
+    if(!contentItem.isEmpty())
+    {
+      ContentArray.push(contentItem);
+    }
 
-      resultContent.originalContent = (resultContent.originalContent || "") + originalResult;
-      resultContent.parseContent = (resultContent.parseContent || "") + parseResult + '\n';
+    // 處理所有內容
+    for (var i = 0; i < ContentArray.length; i++) {
+      ContentArray[i].runParse();
+      resultContent.originalContent = (resultContent.originalContent || '') + ContentArray[i].print();
+      resultContent.parseContent = (resultContent.parseContent || '') + ContentArray[i].printParseResult();
     }
 
     return resultContent;
