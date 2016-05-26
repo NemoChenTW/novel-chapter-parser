@@ -17,8 +17,12 @@ function ChapterObj(title, content){
   this.parsedTitle = "";
   this.parsedContent = "";
 
-  this.parseAllTitles = function () {};
-  this.parseAllContents = function () {};
+  this.parseAllTitles = function () {
+    this.parsedTitle = this.title;
+  };
+  this.parseAllContents = function () {
+    this.parsedContent = this.originContent;
+  };
 }
 ChapterObj.prototype = {
   isEmpty : function () {
