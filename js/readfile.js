@@ -14,9 +14,11 @@ TextContent.prototype = {
 function ChapterObj(title, content){
   this.title = title || "";
   this.originContent = new TextContent(content || "");
+  this.parsedTitle = "";
   this.parsedContent = "";
 
-  this.parse = function () {};
+  this.parseAllTitles = function () {};
+  this.parseAllContents = function () {};
 }
 ChapterObj.prototype = {
   isEmpty : function () {
@@ -34,11 +36,15 @@ ChapterObj.prototype = {
   AddContent : function (content) {
     this.originContent.AddContent(content);
   },
-  setParseFun : function (parseFunction) {
-    this.parse = parseFunction;
+  setTitleParseFun : function (parseFunction) {
+    this.parseAllTitles = parseFunction;
+  },
+  setContentParseFun : function (parseFunction) {
+    this.parseAllContents = parseFunction;
   },
   runParse : function () {
-    this.parse();
+    this.parseAllTitles();
+    this.parseAllContents();
   }
 }
 
