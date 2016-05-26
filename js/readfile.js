@@ -135,7 +135,8 @@ extend(ChapterObj, IParseNovel);
     var ContentArray = [];
     var resultContent = {
       originalContent : '',
-      parseContent : ''
+      parseContent : '',
+      CapturedTitles : ''
     };
     var contentItem = new ChapterObj();
     IParseNovel.prototype.parseAllTitles = function () {
@@ -163,7 +164,10 @@ extend(ChapterObj, IParseNovel);
           ContentArray.push(contentItem);
         }
         // 建立新章節物件
-        contentItem = new ChapterObj(line + '\n');
+        var chapterTitle = line + '\n';
+        contentItem = new ChapterObj(chapterTitle);
+
+        resultContent.CapturedTitles += (start + chapterTitle + end);
       }
       else {
         contentItem.AddContent(line + '\n');
