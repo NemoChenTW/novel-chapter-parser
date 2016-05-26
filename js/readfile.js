@@ -1,3 +1,9 @@
+// 設定繼承
+function extend(child, supertype)
+{
+   child.prototype.__proto__ = supertype.prototype;
+}
+
 // 定義 TextContent
 function TextContent(content){
   this.content = content || "";
@@ -10,19 +16,23 @@ TextContent.prototype = {
     this.content += content;
   }
 }
+
+function IParseNovel() {}
+IParseNovel.prototype = {
+  parseAllTitles : function () {
+    this.parsedTitle = this.title;
+  },
+  parseAllContents : function () {
+    this.parsedContent = this.originContent;
+  }
+}
+
 // 定義 ChapterObj
 function ChapterObj(title, content){
   this.title = title || "";
   this.originContent = new TextContent(content || "");
   this.parsedTitle = "";
   this.parsedContent = "";
-
-  this.parseAllTitles = function () {
-    this.parsedTitle = this.title;
-  };
-  this.parseAllContents = function () {
-    this.parsedContent = this.originContent;
-  };
 }
 ChapterObj.prototype = {
   isEmpty : function () {
@@ -43,17 +53,13 @@ ChapterObj.prototype = {
   AddContent : function (content) {
     this.originContent.AddContent(content);
   },
-  setTitleParseFun : function (parseFunction) {
-    this.parseAllTitles = parseFunction;
-  },
-  setContentParseFun : function (parseFunction) {
-    this.parseAllContents = parseFunction;
-  },
   runParse : function () {
     this.parseAllTitles();
     this.parseAllContents();
   }
 }
+// 設定 ChapterObj 繼承 IParseNovel
+extend(ChapterObj, IParseNovel);
 
   function readFile() {
       var files = document.getElementById('datafile').files;
