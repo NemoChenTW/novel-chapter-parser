@@ -1,3 +1,35 @@
+// 定義 TextContent
+function TextContent(content){
+  this.content = content || "";
+}
+TextContent.prototype = {
+  AddContent : function (content) {
+    this.content += content;
+  }
+}
+// 定義 ChapterObj
+function ChapterObj(title, content){
+  this.title = title || "";
+  this.originContent = new TextContent(content || "");
+  this.parsedContent = "";
+
+  this.parse = function () {};
+}
+ChapterObj.prototype = {
+  print : function () {
+    return this.title + "\n" + this.originContent.content + "\n";
+  },
+  AddContent : function (content) {
+    this.originContent.AddContent(content);
+  },
+  setParseFun : function (parseFunction) {
+    this.parse = parseFunction;
+  },
+  runParse : function () {
+    this.parse();
+  }
+}
+
   function readFile() {
       var files = document.getElementById('datafile').files;
       if (!files.length) {
