@@ -119,10 +119,12 @@ ChapterObj.prototype = {
 
   function parseFile(FileContens) {
 
+    var ContentArray = [];
     var resultContent = {
       originalContent : "",
       parseContent : ""
     };
+    var contentItem = new ChapterObj();
 
     // 將檔案內容以行為單位儲存
     var lines = FileContens.split('\n');
@@ -137,16 +139,34 @@ ChapterObj.prototype = {
       var end = '</font>';
 
       if (isChapter(line)) {
-        originalResult = start + line + end;
-        parseResult = "<chapter> " + line;
+        if(!contentItem.isEmpty())
+        {
+          ContentArray.push(contentItem);
+          contentItem = new ChapterObj(line);
+        }
+        //
+        // originalResult = start + line + end;
+        // parseResult = "<chapter> " + line;
       }
       else {
-        originalResult = line;
-        parseResult = line;
+        contentItem.AddContent(line);
+        // originalResult = line;
+        // parseResult = line;
       }
+      //
+      // resultContent.originalContent = (resultContent.originalContent || "") + originalResult;
+      // resultContent.parseContent = (resultContent.parseContent || "") + parseResult + '\n';
+    }
+    if(!contentItem.isEmpty())
+    {
+      ContentArray.push(contentItem);
+    }
 
-      resultContent.originalContent = (resultContent.originalContent || "") + originalResult;
-      resultContent.parseContent = (resultContent.parseContent || "") + parseResult + '\n';
+    // 處理所有內容
+    for (var i = 0; i < ContentArray.length; i++) {
+      ContentArray[i].runParse();
+      resultContent.originalContent = (resultContent.originalContent || "") + ContentArray[i].print();
+      resultContent.parseContent = (resultContent.parseContent || "") + ContentArray[i].printParseResult() + '\n';
     }
 
     return resultContent;
