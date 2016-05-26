@@ -96,9 +96,9 @@ extend(ChapterObj, IParseNovel);
       reader.readAsText(file);
   }
 
-  function saveFile()
+  function saveFile(inputText)
   {
-  	var textToWrite = document.getElementById('parse_content').textContent;
+  	var textToWrite = inputText || document.getElementById('parse_content').textContent;
   	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
     var fileNameToSaveAs = 'NewFile'
   	// var fileNameToSaveAs = document.getElementById('inputFileNameToSaveAs').value;
