@@ -37,6 +37,9 @@ ChapterObj.prototype = {
   print : function () {
     return this.title + "\n" + this.originContent.content + "\n";
   },
+  printParseResult : function () {
+    return this.parsedTitle + "\n" + this.parsedContent.content + "\n";
+  },
   AddContent : function (content) {
     this.originContent.AddContent(content);
   },
