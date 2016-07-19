@@ -80,7 +80,7 @@ extend(ChapterObj, IParseNovel);
 
               var resContent = parseFile(FileContens);
               // contentArea.innerHTML = resContent.originalContent;
-              contentArea.innerHTML = resContent.CapturedTitles;
+              contentArea.innerHTML = '<p style="color:red">' + resContent.CapturedTitles + '</p>';
               contentArea.hidden = false;
 
 
