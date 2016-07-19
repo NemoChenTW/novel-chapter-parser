@@ -156,8 +156,11 @@ extend(ChapterObj, IParseNovel);
       var line = lines[i];
 
       var originalResult, parseResult;
-      var start = '<font color="red">';
-      var end = '</font>';
+      // var start = '<p style:"color:red">';
+      // var end = '</p>';
+
+      var start='<button type="button" class="btn btn-sm btn-default">Delete</button>';
+      var end='<br>';
 
       if (isChapter(line)) {
         //若原本已經有內容, 先儲存起來
